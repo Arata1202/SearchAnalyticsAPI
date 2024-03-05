@@ -7,6 +7,7 @@ use App\Http\Controllers\PageQueryController;
 use App\Http\Controllers\CountryQueryController;
 use App\Http\Controllers\DeviceQueryController;
 use App\Http\Controllers\DateQueryController;
+use App\Http\Controllers\PageSpeedController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,5 +29,6 @@ Route::post('/search-query', [SearchQueryController::class, 'index']);
 Route::post('/country-query', [CountryQueryController::class, 'index']);
 Route::post('/device-query', [DeviceQueryController::class, 'index']);
 Route::post('/date-query', [DateQueryController::class, 'index']);
+Route::get('/pagespeed', [PageSpeedController::class, 'fetchPageSpeedData']);
 
 

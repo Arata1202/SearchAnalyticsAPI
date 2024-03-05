@@ -58,6 +58,9 @@ Route::get('/devicequery', function () {
 Route::get('/datequery', function () {
     return Inertia::render('DateQuery');
 });
+Route::get('/pagespeed', function () {
+    return Inertia::render('PageSpeed');
+});
 
 
 
