@@ -19,7 +19,7 @@
   </div>
         <div class="sm:flex sm:items-center" style="margin-top: 30px;">
           <div class="sm:flex-auto">
-            <h1 class="text-base font-semibold leading-6 text-gray-900" style="font-size: 30px;">ページ別パフォーマンス</h1>
+            <h1 class="text-base font-semibold leading-6 text-gray-900" style="font-size: 30px;">デバイス別パフォーマンス</h1>
           </div>
           <select v-model="selectedPeriod">
             <option value="0">最新日</option>
@@ -49,7 +49,7 @@
               <table class="min-w-full divide-y divide-gray-300">
                 <thead>
                   <tr>
-                    <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0" style="width: 52%;">ページURL</th>
+                    <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0" style="width: 52%;">デバイス</th>
                     <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" style="width: 12%;">クリック</th>
                     <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" style="width: 12%;">表示回数</th>
                     <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" style="width: 12%;">CTR (%)</th>
@@ -57,7 +57,7 @@
                   </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200">
-                  <tr v-for="item in pageAnalyticsData" :key="item.page">
+                  <tr v-for="item in deviceAnalyticsData" :key="item.page">
                     <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">{{ decodeUrl(item.keys[0]) }}</td>
                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ item.clicks }}</td>
                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ item.impressions }}</td>
@@ -80,13 +80,13 @@
 
   const tabs = [
   { name: '検索パフォーマンス', href: 'searchquery', current: false, id: "SearchQuery" },
-  { name: 'ページ別パフォーマンス', href: 'pagequery', current: true, id: "PageQuery" },
+  { name: 'ページ別パフォーマンス', href: 'pagequery', current: false, id: "PageQuery" },
   { name: '国別パフォーマンス', href: 'countryquery', current: false, id: "CountryQuery" },
-  { name: 'デバイス別パフォーマンス', href: 'devicequery', current: false, id: "DeviceQuery" },
+  { name: 'デバイス別パフォーマンス', href: 'devicequery', current: true, id: "DeviceQuery" },
   { name: '日付別パフォーマンス', href: 'datequery', current: false, id: "DateQuery" },
 ]
   
-  const pageAnalyticsData = ref([]);
+  const deviceAnalyticsData = ref([]);
   const selectedPeriod = ref('28');
   const error = ref(null);
   
@@ -140,13 +140,13 @@
     }
   
     try {
-      let response = await axios.post('/api/page-query', {
+      let response = await axios.post('/api/device-query', {
         startDate: startDate.toISOString().split('T')[0],
         endDate: endDate.toISOString().split('T')[0],
       });
   
       if (response.data) {
-        pageAnalyticsData.value = response.data.map(item => ({
+        deviceAnalyticsData.value = response.data.map(item => ({
           ...item,
           ctr: item.ctr * 100,
           position: item.position,
@@ -163,10 +163,10 @@
   fetchData(selectedPeriod.value);
   
   const calculateStats = () => {
-    const totalClicks = pageAnalyticsData.value.reduce((acc, curr) => acc + curr.clicks, 0);
-    const totalImpressions = pageAnalyticsData.value.reduce((acc, curr) => acc + curr.impressions, 0);
-    const totalCTR = pageAnalyticsData.value.reduce((acc, curr) => acc + curr.ctr, 0) / pageAnalyticsData.value.length;
-    const totalPosition = pageAnalyticsData.value.reduce((acc, curr) => acc + curr.position, 0) / pageAnalyticsData.value.length;
+    const totalClicks = deviceAnalyticsData.value.reduce((acc, curr) => acc + curr.clicks, 0);
+    const totalImpressions = deviceAnalyticsData.value.reduce((acc, curr) => acc + curr.impressions, 0);
+    const totalCTR = deviceAnalyticsData.value.reduce((acc, curr) => acc + curr.ctr, 0) / deviceAnalyticsData.value.length;
+    const totalPosition = deviceAnalyticsData.value.reduce((acc, curr) => acc + curr.position, 0) / deviceAnalyticsData.value.length;
   
     return [
       { id: 1, name: '合計クリック数', value: totalClicks },
@@ -177,7 +177,7 @@
   };
   
   const stats = ref([]);
-  watch(pageAnalyticsData, () => {
+  watch(deviceAnalyticsData, () => {
     stats.value = calculateStats();
   });
 

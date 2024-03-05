@@ -40,9 +40,7 @@
   
   const navigation = [
     { name: 'Dashboard', href: '#', icon: HomeIcon, current: false, id: "dashboard" },
-    { name: '検索パフォーマンス', href: 'searchquery', icon: UsersIcon, current: false, id: "SearchQuery" },
-    { name: 'ページパフォーマンス', href: 'pagequery', icon: FolderIcon, current: false, id: "PageQuery" },
-    { name: 'Calendar', href: '#', icon: CalendarIcon, current: false },
+    { name: '検索結果', href: 'searchquery', icon: UsersIcon, current: false, id: "Query" },
     { name: 'Documents', href: '#', icon: DocumentDuplicateIcon, current: false },
     { name: 'Reports', href: '#', icon: ChartPieIcon, current: false },
   ]

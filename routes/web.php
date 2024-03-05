@@ -52,6 +52,12 @@ Route::get('/pagequery', function () {
 Route::get('/countryquery', function () {
     return Inertia::render('CountryQuery');
 });
+Route::get('/devicequery', function () {
+    return Inertia::render('DeviceQuery');
+});
+Route::get('/datequery', function () {
+    return Inertia::render('DateQuery');
+});
 
 
 

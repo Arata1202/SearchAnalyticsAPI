@@ -1,19 +1,35 @@
 <template>
-  <MainLayout currentId="SearchQuery">
+  <MainLayout currentId="Query">
     <div class="px-4 sm:px-6 lg:px-8">
-      <div class="sm:flex sm:items-center">
+      <div>
+      <div class="sm:hidden">
+        <label for="tabs" class="sr-only">Select a tab</label>
+        <!-- Use an "onChange" listener to redirect the user to the selected tab URL. -->
+        <select id="tabs" name="tabs" class="block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+          <option v-for="tab in tabs" :key="tab.name" :selected="tab.current">{{ tab.name }}</option>
+        </select>
+      </div>
+    <div class="hidden sm:block">
+      <div class="border-b border-gray-200">
+        <nav class="-mb-px flex space-x-8" aria-label="Tabs">
+          <a v-for="tab in tabs" :key="tab.name" :href="tab.href" :class="[tab.current ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700', 'whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium']" :aria-current="tab.current ? 'page' : undefined">{{ tab.name }}</a>
+        </nav>
+      </div>
+    </div>
+  </div>
+      <div class="sm:flex sm:items-center" style="margin-top: 30px;">
         <div class="sm:flex-auto">
-          <h1 class="text-base font-semibold leading-6 text-gray-900">検索結果のクエリ</h1>
-          <select v-model="selectedPeriod">
-            <option value="0">最新日</option>
-            <option value="7">過去 7 日間</option>
-            <option value="28">過去 28 日間</option>
-            <option value="90">過去 3 か月間</option>
-            <option value="180">過去 6 か月間</option>
-            <option value="365">過去 12 か月間</option>
-            <option value="488">過去 16 か月間</option>
-          </select>
+          <h1 class="text-base font-semibold leading-6 text-gray-900" style="font-size: 30px;">検索パフォーマンス</h1>
         </div>
+        <select v-model="selectedPeriod">
+          <option value="0">最新日</option>
+          <option value="7">過去 7 日間</option>
+          <option value="28">過去 28 日間</option>
+          <option value="90">過去 3 か月間</option>
+          <option value="180">過去 6 か月間</option>
+          <option value="365">過去 12 か月間</option>
+          <option value="488">過去 16 か月間</option>
+        </select>
       </div>
       <div class="bg-white">
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
@@ -61,6 +77,14 @@
 import MainLayout from '../Layouts/MainLayout.vue';
 import { ref, watch } from 'vue';
 import axios from 'axios';
+
+const tabs = [
+  { name: '検索パフォーマンス', href: 'searchquery', current: true, id: "SearchQuery" },
+  { name: 'ページ別パフォーマンス', href: 'pagequery', current: false, id: "PageQuery" },
+  { name: '国別パフォーマンス', href: 'countryquery', current: false, id: "CountryQuery" },
+  { name: 'デバイス別パフォーマンス', href: 'devicequery', current: false, id: "DeviceQuery" },
+  { name: '日付別パフォーマンス', href: 'datequery', current: false, id: "DateQuery" },
+]
 
 const searchAnalyticsData = ref([]);
 const selectedPeriod = ref('28');

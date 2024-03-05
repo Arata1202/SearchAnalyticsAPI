@@ -4,6 +4,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SearchQueryController;
 use App\Http\Controllers\PageQueryController;
+use App\Http\Controllers\CountryQueryController;
+use App\Http\Controllers\DeviceQueryController;
+use App\Http\Controllers\DateQueryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +25,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/page-query', [PageQueryController::class, 'index']);
 Route::post('/search-query', [SearchQueryController::class, 'index']);
-Route::post('/country-query', [SearchQueryController::class, 'index']);
+Route::post('/country-query', [CountryQueryController::class, 'index']);
+Route::post('/device-query', [DeviceQueryController::class, 'index']);
+Route::post('/date-query', [DateQueryController::class, 'index']);
 
 

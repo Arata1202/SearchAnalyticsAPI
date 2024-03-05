@@ -19,17 +19,17 @@
   </div>
         <div class="sm:flex sm:items-center" style="margin-top: 30px;">
           <div class="sm:flex-auto">
-            <h1 class="text-base font-semibold leading-6 text-gray-900" style="font-size: 30px;">ページ別パフォーマンス</h1>
-          </div>
-          <select v-model="selectedPeriod">
-            <option value="0">最新日</option>
-            <option value="7">過去 7 日間</option>
-            <option value="28">過去 28 日間</option>
-            <option value="90">過去 3 か月間</option>
-            <option value="180">過去 6 か月間</option>
-            <option value="365">過去 12 か月間</option>
-            <option value="488">過去 16 か月間</option>
-          </select>
+            <h1 class="text-base font-semibold leading-6 text-gray-900" style="font-size: 30px;">日付別パフォーマンス</h1>
+        </div>
+        <select v-model="selectedPeriod">
+          <option value="0">最新日</option>
+          <option value="7">過去 7 日間</option>
+          <option value="28">過去 28 日間</option>
+          <option value="90">過去 3 か月間</option>
+          <option value="180">過去 6 か月間</option>
+          <option value="365">過去 12 か月間</option>
+          <option value="488">過去 16 か月間</option>
+        </select>
         </div>
         <div class="bg-white">
           <div class="mx-auto max-w-7xl px-6 lg:px-8">
@@ -49,7 +49,7 @@
               <table class="min-w-full divide-y divide-gray-300">
                 <thead>
                   <tr>
-                    <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0" style="width: 52%;">ページURL</th>
+                    <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0" style="width: 52%;">国</th>
                     <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" style="width: 12%;">クリック</th>
                     <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" style="width: 12%;">表示回数</th>
                     <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" style="width: 12%;">CTR (%)</th>
@@ -57,7 +57,7 @@
                   </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200">
-                  <tr v-for="item in pageAnalyticsData" :key="item.page">
+                  <tr v-for="item in dateAnalyticsData" :key="item.page">
                     <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">{{ decodeUrl(item.keys[0]) }}</td>
                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ item.clicks }}</td>
                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ item.impressions }}</td>
@@ -80,13 +80,13 @@
 
   const tabs = [
   { name: '検索パフォーマンス', href: 'searchquery', current: false, id: "SearchQuery" },
-  { name: 'ページ別パフォーマンス', href: 'pagequery', current: true, id: "PageQuery" },
+  { name: 'ページ別パフォーマンス', href: 'pagequery', current: false, id: "PageQuery" },
   { name: '国別パフォーマンス', href: 'countryquery', current: false, id: "CountryQuery" },
   { name: 'デバイス別パフォーマンス', href: 'devicequery', current: false, id: "DeviceQuery" },
-  { name: '日付別パフォーマンス', href: 'datequery', current: false, id: "DateQuery" },
+  { name: '日付別パフォーマンス', href: 'datequery', current: true, id: "DateQuery" },
 ]
   
-  const pageAnalyticsData = ref([]);
+  const dateAnalyticsData = ref([]);
   const selectedPeriod = ref('28');
   const error = ref(null);
   
@@ -140,33 +140,37 @@
     }
   
     try {
-      let response = await axios.post('/api/page-query', {
-        startDate: startDate.toISOString().split('T')[0],
-        endDate: endDate.toISOString().split('T')[0],
-      });
-  
-      if (response.data) {
-        pageAnalyticsData.value = response.data.map(item => ({
+    let response = await axios.post('/api/date-query', {
+      startDate: startDate.toISOString().split('T')[0],
+      endDate: endDate.toISOString().split('T')[0],
+    });
+
+    if (response.data) {
+      const sortedData = response.data
+        .map(item => ({
           ...item,
           ctr: item.ctr * 100,
           position: item.position,
-        }));
-      }
-    } catch (err) {
-      error.value = {
-        message: err.message,
-        status: err.response ? err.response.status : 'N/A',
-      };
+        }))
+        .sort((a, b) => new Date(b.keys[0]) - new Date(a.keys[0])); 
+
+      dateAnalyticsData.value = sortedData;
     }
+  } catch (err) {
+    error.value = {
+      message: err.message,
+      status: err.response ? err.response.status : 'N/A',
+    };
   }
-    
-  fetchData(selectedPeriod.value);
+}
+
+fetchData(selectedPeriod.value);
   
   const calculateStats = () => {
-    const totalClicks = pageAnalyticsData.value.reduce((acc, curr) => acc + curr.clicks, 0);
-    const totalImpressions = pageAnalyticsData.value.reduce((acc, curr) => acc + curr.impressions, 0);
-    const totalCTR = pageAnalyticsData.value.reduce((acc, curr) => acc + curr.ctr, 0) / pageAnalyticsData.value.length;
-    const totalPosition = pageAnalyticsData.value.reduce((acc, curr) => acc + curr.position, 0) / pageAnalyticsData.value.length;
+    const totalClicks = dateAnalyticsData.value.reduce((acc, curr) => acc + curr.clicks, 0);
+    const totalImpressions = dateAnalyticsData.value.reduce((acc, curr) => acc + curr.impressions, 0);
+    const totalCTR = dateAnalyticsData.value.reduce((acc, curr) => acc + curr.ctr, 0) / dateAnalyticsData.value.length;
+    const totalPosition = dateAnalyticsData.value.reduce((acc, curr) => acc + curr.position, 0) / dateAnalyticsData.value.length;
   
     return [
       { id: 1, name: '合計クリック数', value: totalClicks },
@@ -177,7 +181,7 @@
   };
   
   const stats = ref([]);
-  watch(pageAnalyticsData, () => {
+  watch(dateAnalyticsData, () => {
     stats.value = calculateStats();
   });
 

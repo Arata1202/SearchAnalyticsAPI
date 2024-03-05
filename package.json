@@ -24,6 +24,7 @@
         "@headlessui/vue": "^1.7.19",
         "@heroicons/vue": "^2.1.1",
         "@inertiajs/inertia": "^0.11.1",
-        "chart.js": "^4.4.2"
+        "chart.js": "^4.4.2",
+        "vue-router": "^4.3.0"
     }
 }
