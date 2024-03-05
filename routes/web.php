@@ -43,4 +43,16 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/searchquery', function () {
+    return Inertia::render('SearchQuery');
+});
+Route::get('/pagequery', function () {
+    return Inertia::render('PageQuery');
+});
+Route::get('/countryquery', function () {
+    return Inertia::render('CountryQuery');
+});
+
+
+
 require __DIR__.'/auth.php';

@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SearchQueryController;
+use App\Http\Controllers\PageQueryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +19,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('/page-query', [PageQueryController::class, 'index']);
+Route::post('/search-query', [SearchQueryController::class, 'index']);
+Route::post('/country-query', [SearchQueryController::class, 'index']);
+
+

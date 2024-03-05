@@ -39,9 +39,9 @@
   import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
   
   const navigation = [
-    { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
-    { name: 'Team', href: '#', icon: UsersIcon, current: false },
-    { name: 'Projects', href: '#', icon: FolderIcon, current: false },
+    { name: 'Dashboard', href: '#', icon: HomeIcon, current: false, id: "dashboard" },
+    { name: '検索パフォーマンス', href: 'searchquery', icon: UsersIcon, current: false, id: "SearchQuery" },
+    { name: 'ページパフォーマンス', href: 'pagequery', icon: FolderIcon, current: false, id: "PageQuery" },
     { name: 'Calendar', href: '#', icon: CalendarIcon, current: false },
     { name: 'Documents', href: '#', icon: DocumentDuplicateIcon, current: false },
     { name: 'Reports', href: '#', icon: ChartPieIcon, current: false },
@@ -57,6 +57,15 @@
   ]
   
   const sidebarOpen = ref(false)
+
+  const props = defineProps({
+    currentId: null
+  })
+  navigation.forEach(navi => {
+    if(navi.id === props.currentId){
+      navi.current = true
+    }
+  })
   </script>
 <template>
     <!--
