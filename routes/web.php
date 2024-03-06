@@ -61,6 +61,12 @@ Route::get('/datequery', function () {
 Route::get('/pagespeed', function () {
     return Inertia::render('PageSpeed');
 });
+Route::get('/mobilepagespeed', function () {
+    return Inertia::render('MobilePageSpeed');
+});
+Route::get('/twitteranalytics', function () {
+    return Inertia::render('TwitterAnalytics');
+});
 
 
 

@@ -35,14 +35,20 @@
     HomeIcon,
     UsersIcon,
     XMarkIcon,
+    RocketLaunchIcon,
+    GlobeAsiaAustraliaIcon,
+    ChartBarIcon,
+    EnvelopeIcon,
+    PhotoIcon,
   } from '@heroicons/vue/24/outline'
   import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
   
   const navigation = [
-    { name: 'Dashboard', href: '#', icon: HomeIcon, current: false, id: "dashboard" },
-    { name: '検索結果', href: 'searchquery', icon: UsersIcon, current: false, id: "Query" },
-    { name: 'Documents', href: '#', icon: DocumentDuplicateIcon, current: false },
-    { name: 'スピード', href: 'pagespeed', icon: ChartPieIcon, current: false, id: "Speed" },
+    { name: 'Search Query', href: 'searchquery', icon: GlobeAsiaAustraliaIcon, current: false, id: "Query" },
+    { name: 'Page Speed', href: 'mobilepagespeed', icon: RocketLaunchIcon, current: false, id: "Speed" },
+    { name: 'Contact', href: '#', icon: EnvelopeIcon, current: false, id: "contact" },
+    { name: 'Twitter Analytics', href: 'twitteranalytics', icon: ChartBarIcon, current: false, id: "TwitterAnalytics" },
+    { name: 'Instagram Analytics', href: 'instagramanalytics', icon: PhotoIcon, current: false, id: "InstagramAnalytics" },
   ]
   const teams = [
     { id: 1, name: 'Heroicons', href: '#', initial: 'H', current: false },

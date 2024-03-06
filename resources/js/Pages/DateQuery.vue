@@ -19,16 +19,16 @@
   </div>
         <div class="sm:flex sm:items-center" style="margin-top: 30px;">
           <div class="sm:flex-auto">
-            <h1 class="text-base font-semibold leading-6 text-gray-900" style="font-size: 30px;">日付別パフォーマンス</h1>
+            <h1 class="text-base font-semibold leading-6 text-gray-900" style="font-size: 30px;">Date Performance</h1>
         </div>
         <select v-model="selectedPeriod">
-          <option value="0">最新日</option>
-          <option value="7">過去 7 日間</option>
-          <option value="28">過去 28 日間</option>
-          <option value="90">過去 3 か月間</option>
-          <option value="180">過去 6 か月間</option>
-          <option value="365">過去 12 か月間</option>
-          <option value="488">過去 16 か月間</option>
+          <option value="0">Latest Day</option>
+            <option value="7">Last 7 Days</option>
+            <option value="28">Last 28 Days</option>
+            <option value="90">Last 3 Months</option>
+            <option value="180">Last 6 Months</option>
+            <option value="365">Last 12 Months</option>
+            <option value="488">Last 16 Months</option>
         </select>
         </div>
         <div class="bg-white">
@@ -49,11 +49,11 @@
               <table class="min-w-full divide-y divide-gray-300">
                 <thead>
                   <tr>
-                    <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0" style="width: 52%;">国</th>
-                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" style="width: 12%;">クリック</th>
-                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" style="width: 12%;">表示回数</th>
+                    <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0" style="width: 52%;">Date</th>
+                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" style="width: 12%;">Clicks</th>
+                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" style="width: 12%;">Impression</th>
                     <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" style="width: 12%;">CTR (%)</th>
-                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" style="width: 12%;">平均表示順位</th>
+                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" style="width: 12%;">Position</th>
                   </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200">
@@ -79,11 +79,11 @@
   import axios from 'axios';
 
   const tabs = [
-  { name: '検索パフォーマンス', href: 'searchquery', current: false, id: "SearchQuery" },
-  { name: 'ページ別パフォーマンス', href: 'pagequery', current: false, id: "PageQuery" },
-  { name: '国別パフォーマンス', href: 'countryquery', current: false, id: "CountryQuery" },
-  { name: 'デバイス別パフォーマンス', href: 'devicequery', current: false, id: "DeviceQuery" },
-  { name: '日付別パフォーマンス', href: 'datequery', current: true, id: "DateQuery" },
+  { name: 'Search Performance', href: 'searchquery', current: false, id: "SearchQuery" },
+  { name: 'Page Performance', href: 'pagequery', current: false, id: "PageQuery" },
+  { name: 'Country Performance', href: 'countryquery', current: false, id: "CountryQuery" },
+  { name: 'Device Performance', href: 'devicequery', current: false, id: "DeviceQuery" },
+  { name: 'Date Performance', href: 'datequery', current: true, id: "DateQuery" },
 ]
   
   const dateAnalyticsData = ref([]);
@@ -173,10 +173,10 @@ fetchData(selectedPeriod.value);
     const totalPosition = dateAnalyticsData.value.reduce((acc, curr) => acc + curr.position, 0) / dateAnalyticsData.value.length;
   
     return [
-      { id: 1, name: '合計クリック数', value: totalClicks },
-      { id: 2, name: '合計表示回数', value: totalImpressions },
-      { id: 3, name: '平均CTR', value: totalCTR.toFixed(2) + '%' },
-      { id: 4, name: '平均掲載順位', value: totalPosition.toFixed(2) }
+      { id: 1, name: 'Total Clicks', value: totalClicks },
+      { id: 2, name: 'Total Impressions', value: totalImpressions },
+      { id: 3, name: 'Average CTR', value: totalCTR.toFixed(2) + '%' },
+      { id: 4, name: 'Average Position', value: totalPosition.toFixed(2) }
     ];
   };
   
