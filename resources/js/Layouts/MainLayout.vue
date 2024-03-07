@@ -46,7 +46,7 @@
   const navigation = [
     { name: 'Search Query', href: 'searchquery', icon: GlobeAsiaAustraliaIcon, current: false, id: "Query" },
     { name: 'Page Speed', href: 'mobilepagespeed', icon: RocketLaunchIcon, current: false, id: "Speed" },
-    { name: 'Contact', href: '#', icon: EnvelopeIcon, current: false, id: "contact" },
+    { name: 'Contact', href: 'contactmail', icon: EnvelopeIcon, current: false, id: "Contact" },
     { name: 'Twitter Analytics', href: 'twitteranalytics', icon: ChartBarIcon, current: false, id: "TwitterAnalytics" },
     { name: 'Instagram Analytics', href: 'instagramanalytics', icon: PhotoIcon, current: false, id: "InstagramAnalytics" },
   ]

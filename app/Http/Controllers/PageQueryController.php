@@ -10,12 +10,12 @@ class PageQueryController extends Controller
     public function index(Request $request)
     {
         $client = new Google_Client();
-        $client->setAuthConfig(storage_path('app/myblogproject-415210-3a60a1c6fb1c.json'));
+        $client->setAuthConfig(storage_path(env('GOOGLE_APPLICATION_CREDENTIALS')));
         $client->addScope(Google_Service_Webmasters::WEBMASTERS_READONLY);
 
         $service = new Google_Service_Webmasters($client);
 
-        $siteUrl = 'https://mochaccinoblog.com';
+        $siteUrl = env('MY_ADDRESS');
         $startDate = $request->input('startDate', '7daysAgo');
         $endDate = $request->input('endDate', 'today');
 

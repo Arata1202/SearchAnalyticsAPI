@@ -67,6 +67,9 @@ Route::get('/mobilepagespeed', function () {
 Route::get('/twitteranalytics', function () {
     return Inertia::render('TwitterAnalytics');
 });
+Route::get('/contactmail', function () {
+    return Inertia::render('ContactMail');
+});
 
 
 
