@@ -33,12 +33,6 @@ class MobilePageSpeedController extends Controller
                 $results[$strategy] = [
                     'performanceScore' => $data['lighthouseResult']['categories']['performance']['score'] ?? null,
                     'diagnostics' => $data['lighthouseResult']['audits']['diagnostics']['details']['items'][0] ?? [],
-                    'firstContentfulPaint' => $data['lighthouseResult']['audits']['first-contentful-paint']['numericValue'] ?? null,
-                    'largestContentfulPaint' => $data['lighthouseResult']['audits']['largest-contentful-paint']['numericValue'] ?? null,
-                    'totalBlockingTime' => $data['lighthouseResult']['audits']['total-blocking-time']['numericValue'] ?? null,
-                    'cumulativeLayoutShift' => $data['lighthouseResult']['audits']['cumulative-layout-shift']['numericValue'] ?? null,
-                    'speedIndex' => $data['lighthouseResult']['audits']['speed-index']['numericValue'] ?? null,
-                    'timeToInteractive' => $data['lighthouseResult']['audits']['interactive']['numericValue'] ?? null,
                 ];
             } catch (\Exception $e) {
                 $results[$strategy] = ['error' => $e->getMessage()];

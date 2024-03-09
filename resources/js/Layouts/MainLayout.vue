@@ -40,11 +40,13 @@
     ChartBarIcon,
     EnvelopeIcon,
     PhotoIcon,
+    DocumentMagnifyingGlassIcon,
   } from '@heroicons/vue/24/outline'
   import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
   
   const navigation = [
     { name: 'Search Query', href: 'searchquery', icon: GlobeAsiaAustraliaIcon, current: false, id: "Query" },
+    { name: 'Sitemap', href: 'sitemap', icon: DocumentMagnifyingGlassIcon, current: false, id: "Sitemap" },
     { name: 'Page Speed', href: 'mobilepagespeed', icon: RocketLaunchIcon, current: false, id: "Speed" },
     { name: 'Contact', href: 'contactmail', icon: EnvelopeIcon, current: false, id: "Contact" },
     { name: 'Twitter Analytics', href: 'twitteranalytics', icon: ChartBarIcon, current: false, id: "TwitterAnalytics" },

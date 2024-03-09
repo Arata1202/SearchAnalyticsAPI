@@ -253,6 +253,15 @@ const countryTranslations = {
   vnm: 'ベトナム',
   zaf: '南アフリカ',
   zzz: 'その他',
+  bel: 'ベルギー',
+  bgr: 'ブルガリア',
+  che: 'スイス',
+  gtm: 'グアテマラ',
+  mys: 'マレーシア',
+  sur: 'スリナム',
+  tjk: 'タンザニア',
+  tto: 'トリニダード・トバゴ',
+  ven: 'ベネズエラ',
 };
 
   </script>

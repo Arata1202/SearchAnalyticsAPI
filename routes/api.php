@@ -9,7 +9,10 @@ use App\Http\Controllers\DeviceQueryController;
 use App\Http\Controllers\DateQueryController;
 use App\Http\Controllers\PageSpeedController;
 use App\Http\Controllers\MobilePageSpeedController;
-use App\Http\Controllers\ContactMailController;
+use App\Http\Controllers\SitemapController;
+
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -35,3 +38,6 @@ Route::get('/pagespeed', [PageSpeedController::class, 'fetchPageSpeedData']);
 Route::get('/mobilepagespeed', [MobilePageSpeedController::class, 'fetchPageSpeedData']);
 
 
+
+Route::get('/sitemaps', [SitemapController::class, 'index']);
+Route::post('/submit-sitemap', [SitemapController::class, 'submitSitemap']);

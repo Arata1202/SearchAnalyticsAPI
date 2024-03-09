@@ -47,14 +47,16 @@
               <table class="min-w-full divide-y divide-gray-300">
                 <thead>
                   <tr>
-                    <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0" style="width: 52%;">Cause｜PC</th>
-                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" style="width: 12%;">Value</th>
+                    <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0" style="width: 40%;">Detail｜PC</th>
+                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" style="width: 30%;">Value</th>
+                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" style="width: 50%;">Optimize</th>
                   </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200">
                   <tr v-for="(value, index, key) in data.desktop.diagnostics" :key="index">
                     <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">{{ translations[index] || index }}</td>
                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ (Math.round(value).toFixed(0)) }} {{ units[index] || '' }}</td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ optimize[index] || '' }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -79,24 +81,44 @@ const tabs = [
   { name: 'PC', href: 'pagespeed', current: true, id: "PageSpeed" },
 ]
 
+const optimize = {
+  mainDocumentTransferSize: 'メインドキュメント のサイズを最小化しましょう',
+  numStylesheets: '使用していない CSS は削除しましょう',
+  numScripts: '使用していない JavaScript は削除しましょう',
+  totalByteWeight: '総バイトサイズ は最適化してください',
+  maxRtt: '高い RTT はユーザー体験を低下させます',
+  rtt: '高い RTT はユーザー体験を低下させます',
+  numRequests: 'リクエスト は最小限にすることが推奨されます',
+  numTasksOver100ms: 'タスク が長時間実行されないようにしてください',
+  totalTaskTime: 'タスク が長時間実行されないようにしてください',
+  numTasksOver500ms: 'タスク が長時間実行されないようにしてください',
+  numTasks: 'タスク は最小限にすることが推奨されます',
+  numFonts: 'フォント は最小限にすることが推奨されます',
+  maxServerLatency: '高レイテンシ はユーザー体験を低下させます',
+  throughput: '高スループット は効率的なデータ処理を示します',
+  numTasksOver10ms: 'タスク が長時間実行されないようにしてください',
+  numTasksOver50ms: 'タスク が長時間実行されないようにしてください',
+  numTasksOver25ms: 'タスク が長時間実行されないようにしてください',
+};
+
 const translations = {
   mainDocumentTransferSize: 'メインドキュメントの転送サイズ',
-  numStylesheets: 'CSSの件数',
-  numScripts: 'JavaScriptの件数',
-  totalByteWeight: '総バイト数',
+  numStylesheets: 'CSS',
+  numScripts: 'JavaScript',
+  totalByteWeight: '総バイトサイズ',
   maxRtt: '最大往復時間｜RTT',
   rtt: '往復時間｜RTT',
-  numRequests: 'リクエストの件数',
-  numTasksOver100ms: '100msを超えるタスクの件数',
+  numRequests: 'リクエスト',
+  numTasksOver100ms: '100msを超えるタスク',
   totalTaskTime: 'タスクの総実行時間',
-  numTasksOver500ms: '500msを超えるタスクの件数',
-  numTasks: 'タスクの件数',
-  numFonts: 'フォント数',
+  numTasksOver500ms: '500msを超えるタスク',
+  numTasks: 'タスク',
+  numFonts: 'フォント',
   maxServerLatency: '最大サーバーレイテンシ',
   throughput: 'スループット',
-  numTasksOver10ms: '10msを超えるタスクの件数',
-  numTasksOver50ms: '50msを超えるタスクの件数',
-  numTasksOver25ms: '25msを超えるタスクの件数',
+  numTasksOver10ms: '10msを超えるタスク',
+  numTasksOver50ms: '50msを超えるタスク',
+  numTasksOver25ms: '25msを超えるタスク',
 };
 
 const units = {
