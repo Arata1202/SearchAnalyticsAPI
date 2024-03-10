@@ -14,6 +14,7 @@
 -->
 <script setup>
   import { ref } from 'vue'
+  import axios from 'axios'
   import {
     Dialog,
     DialogPanel,
@@ -41,16 +42,17 @@
     EnvelopeIcon,
     PhotoIcon,
     DocumentMagnifyingGlassIcon,
+    SignalIcon,
   } from '@heroicons/vue/24/outline'
   import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
   
   const navigation = [
+    { name: 'Dashboard', href: 'home', icon: ChartPieIcon, current: false, id: "Dashboard" },
     { name: 'Search Query', href: 'searchquery', icon: GlobeAsiaAustraliaIcon, current: false, id: "Query" },
+    { name: 'Index', href: 'submitindex', icon: SignalIcon, current: false, id: "Index" },
     { name: 'Sitemap', href: 'sitemap', icon: DocumentMagnifyingGlassIcon, current: false, id: "Sitemap" },
     { name: 'Page Speed', href: 'mobilepagespeed', icon: RocketLaunchIcon, current: false, id: "Speed" },
     { name: 'Contact', href: 'contactmail', icon: EnvelopeIcon, current: false, id: "Contact" },
-    { name: 'Twitter Analytics', href: 'twitteranalytics', icon: ChartBarIcon, current: false, id: "TwitterAnalytics" },
-    { name: 'Instagram Analytics', href: 'instagramanalytics', icon: PhotoIcon, current: false, id: "InstagramAnalytics" },
   ]
   const teams = [
     { id: 1, name: 'Heroicons', href: '#', initial: 'H', current: false },
@@ -58,8 +60,8 @@
     { id: 3, name: 'Workcation', href: '#', initial: 'W', current: false },
   ]
   const userNavigation = [
-    { name: 'Your profile', href: '#' },
-    { name: 'Sign out', href: '#' },
+    { name: 'Profile', href: 'profile' },
+    // { name: 'Sign out', click:'signOut', href: '#' },
   ]
   
   const sidebarOpen = ref(false)
@@ -72,6 +74,12 @@
       navi.current = true
     }
   })
+
+  const signOut = () => {
+  axios.post('/logout').then(() => {
+    window.location = '/login';
+  });
+};
   </script>
 <template>
     <!--
@@ -222,7 +230,7 @@
                 <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
                   <MenuItems class="absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
                     <MenuItem v-for="item in userNavigation" :key="item.name" v-slot="{ active }">
-                      <a :href="item.href" :class="[active ? 'bg-gray-50' : '', 'block px-3 py-1 text-sm leading-6 text-gray-900']">{{ item.name }}</a>
+                      <a :href="item.href" :class="[active ? 'bg-gray-50' : '', 'block px-3 py-1 text-sm leading-6 text-gray-900']" @click="signOut">Sign out</a>
                     </MenuItem>
                   </MenuItems>
                 </transition>

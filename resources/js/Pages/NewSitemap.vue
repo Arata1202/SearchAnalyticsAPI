@@ -4,7 +4,6 @@
         <div>
         <div class="sm:hidden">
           <label for="tabs" class="sr-only">Select a tab</label>
-          <!-- Use an "onChange" listener to redirect the user to the selected tab URL. -->
           <select id="tabs" name="tabs" class="block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
             <option v-for="tab in tabs" :key="tab.name" :selected="tab.current">{{ tab.name }}</option>
           </select>
@@ -39,7 +38,7 @@
   
   const tabs = [
     { name: 'Sitemap', href: 'sitemap', current: false, id: "Sitemap" },
-    { name: 'Regist Sitemap', href: 'newsitemap', current: true, id: "NewSitemap" },
+    { name: 'Regist', href: 'newsitemap', current: true, id: "NewSitemap" },
   ]
 
   const sitemapPath = ref('');

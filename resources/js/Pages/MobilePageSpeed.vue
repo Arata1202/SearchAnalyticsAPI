@@ -17,7 +17,6 @@
         <span style="font-size:20px;">データの取得には数分かかる場合もあります</span>
       </div>
         <div v-if="data && data.mobile && data.desktop">
-          <div class="bg-white py-24 sm:py-32" style="padding-top: 0; margin: auto;">
       <div class="mx-auto max-w-7xl px-6 lg:px-8">
         <div class="mx-auto max-w-2xl lg:max-w-none">
             <dl class="mt-16 grid grid-cols-1 gap-0.5 overflow-hidden rounded-2xl text-center sm:grid-cols-2 lg:grid-cols-4">
@@ -40,7 +39,7 @@
           </dl>
         </div>
       </div>
-      <div class="mt-8 flow-root">
+      <div class="mt-8 flow-root" style="margin-top: 70px;">
             <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
               <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
                 <table class="min-w-full divide-y divide-gray-300">
@@ -52,25 +51,59 @@
                     </tr>
                   </thead>
                   <tbody class="divide-y divide-gray-200">
-                    <tr v-for="(value, index, key) in data.desktop.diagnostics" :key="index">
-                      <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">{{ translations[index] || index }}</td>
-                      <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ (Math.round(value).toFixed(0)) }} {{ units[index] || '' }}</td>
-                      <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ optimize[index] || '' }}</td>
+                    <tr v-for="item in paginatedData" :key="item[0]">
+                      <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">{{ translations[item[0]] || item[0] }}</td>
+                      <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ (Math.round(item[1]).toFixed(0)) }} {{ units[item[0]] || '' }}</td>
+                      <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ optimize[item[0]] || '' }}</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
             </div>
           </div>
-    </div>
+          <nav class="flex items-center justify-between border-t border-gray-200 px-4 sm:px-0" style="margin-top: 50px;">
+          <div class="-mt-px flex w-0 flex-1">
+            <button
+              @click="changePage(currentPage - 1)"
+              :disabled="currentPage === 1"
+              class="inline-flex items-center border-t-2 border-transparent pr-1 pt-4 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+            >
+              <ArrowLongLeftIcon class="mr-3 h-5 w-5 text-gray-400" aria-hidden="true" />
+              Previous
+            </button>
+          </div>
+          <div class="hidden md:-mt-px md:flex">
+            <button
+              v-for="page in visiblePages"
+              :key="page"
+              @click="changePage(page)"
+              class="inline-flex items-center border-t-2 px-4 pt-4 text-sm font-medium hover:border-gray-300 hover:text-gray-700"
+              :class="{ 'border-indigo-500 text-indigo-600': currentPage === page }"
+            >
+              {{ page }}
+            </button>
+            <span v-if="needsEllipsis" class="inline-flex items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-gray-500">...</span>
+          </div>
+          <div class="-mt-px flex w-0 flex-1 justify-end">
+            <button
+              @click="changePage(currentPage + 1)"
+              :disabled="currentPage === totalPages"
+              class="inline-flex items-center border-t-2 border-transparent pl-1 pt-4 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+            >
+              Next
+              <ArrowLongRightIcon class="ml-3 h-5 w-5 text-gray-400" aria-hidden="true" />
+            </button>
+          </div>
+        </nav>
         </div>
       </div>
     </MainLayout>
   </template>
   
   <script setup>
+  import { ArrowLongLeftIcon, ArrowLongRightIcon } from '@heroicons/vue/20/solid'
   import MainLayout from '../Layouts/MainLayout.vue';
-  import { ref, onMounted, watch } from 'vue';
+  import { ref, onMounted, computed } from 'vue';
   import axios from 'axios';
 
   const isLoading = ref(false);
@@ -140,15 +173,14 @@ const units = {
   numTasksOver25ms: '件',
 };
 
-  const url = ref('https://mochaccinoblog.com');
+  const url = ref(import.meta.env.VITE_MY_ADDRESS);
   const data = ref(null);
   
-  async function fetchPageSpeedData() {
-    if (!url.value) {
-      alert('Please enter a URL');
-      return;
-    }
-    isLoading.value = true;
+const currentPage = ref(1);
+const itemsPerPage = ref(10);
+
+async function fetchPageSpeedData() {
+  isLoading.value = true;
   try {
     const response = await axios.get(`/api/pagespeed?url=${encodeURIComponent(url.value)}`);
     data.value = response.data;
@@ -157,14 +189,43 @@ const units = {
   } finally {
     isLoading.value = false;
   }
-    try {
-      const response = await axios.get(`/api/pagespeed?url=${encodeURIComponent(url.value)}`);
-      data.value = response.data;
-    } catch (error) {
-      console.error('Error fetching PageSpeed data:', error);
-    }
-  }
+}
   
   onMounted(fetchPageSpeedData);
+
+const paginatedData = computed(() => {
+  if (!data.value || !data.value.mobile || !data.value.mobile.diagnostics) {
+    return [];
+  }
+  const start = (currentPage.value - 1) * itemsPerPage.value;
+  const end = start + itemsPerPage.value;
+  return Object.entries(data.value.mobile.diagnostics).slice(start, end);
+});
+
+const totalPages = computed(() => {
+  if (!data.value || !data.value.mobile || !data.value.mobile.diagnostics) {
+    return 0;
+  }
+  return Math.ceil(Object.keys(data.value.mobile.diagnostics).length / itemsPerPage.value);
+});
+
+function changePage(page) {
+  currentPage.value = page;
+}
+
+const visiblePages = computed(() => {
+  const pages = [];
+  const total = totalPages.value;
+  const current = currentPage.value;
+  const range = 2;
+
+  for (let i = 1; i <= total; i++) {
+    if (i === 1 || i === total || (i >= current - range && i <= current + range)) {
+      pages.push(i);
+    }
+  }
+
+  return pages;
+});
   </script>
   

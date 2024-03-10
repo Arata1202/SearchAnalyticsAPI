@@ -25,6 +25,7 @@ Route::get('/', function () {
     ]);
 });
 
+
 Route::get('/', function () {
     return redirect()->route('home');
 });
@@ -37,42 +38,53 @@ Route::get('/dashboard', function () {
     return redirect()->route('home');
 });
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+// Route::middleware('auth')->group(function () {
+//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// });
+
+Route::get('/profile', function () {
+    return Inertia::render('Profile');
+})->middleware(['auth', 'verified']);
+
 
 Route::get('/searchquery', function () {
     return Inertia::render('SearchQuery');
-});
+})->middleware(['auth', 'verified']);
 Route::get('/pagequery', function () {
     return Inertia::render('PageQuery');
-});
+})->middleware(['auth', 'verified']);
 Route::get('/countryquery', function () {
     return Inertia::render('CountryQuery');
-});
+})->middleware(['auth', 'verified']);
 Route::get('/devicequery', function () {
     return Inertia::render('DeviceQuery');
-});
+})->middleware(['auth', 'verified']);
 Route::get('/datequery', function () {
     return Inertia::render('DateQuery');
-});
+})->middleware(['auth', 'verified']);
 Route::get('/pagespeed', function () {
     return Inertia::render('PageSpeed');
-});
+})->middleware(['auth', 'verified']);
 Route::get('/mobilepagespeed', function () {
     return Inertia::render('MobilePageSpeed');
-});
-Route::get('/twitteranalytics', function () {
-    return Inertia::render('TwitterAnalytics');
-});
+})->middleware(['auth', 'verified']);
 Route::get('/sitemap', function () {
     return Inertia::render('Sitemap');
-});
+})->middleware(['auth', 'verified']);
 Route::get('/newsitemap', function () {
     return Inertia::render('NewSitemap');
-});
+})->middleware(['auth', 'verified']);
+Route::get('/submitindex', function () {
+    return Inertia::render('SubmitIndex');
+})->middleware(['auth', 'verified']);
+Route::get('/newindex', function () {
+    return Inertia::render('NewIndex');
+})->middleware(['auth', 'verified']);
+Route::get('/contactmail', function () {
+    return Inertia::render('ContactMail');
+})->middleware(['auth', 'verified']);
 
 
 

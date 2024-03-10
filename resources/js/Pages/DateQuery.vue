@@ -4,7 +4,6 @@
         <div>
       <div class="sm:hidden">
         <label for="tabs" class="sr-only">Select a tab</label>
-        <!-- Use an "onChange" listener to redirect the user to the selected tab URL. -->
         <select id="tabs" name="tabs" class="block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
           <option v-for="tab in tabs" :key="tab.name" :selected="tab.current">{{ tab.name }}</option>
         </select>
@@ -43,7 +42,7 @@
             </div>
           </div>
         </div>
-        <div class="mt-8 flow-root">
+        <div class="mt-8 flow-root" style="margin-top: 70px;">
           <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
               <table class="min-w-full divide-y divide-gray-300">
@@ -57,7 +56,7 @@
                   </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200">
-                  <tr v-for="item in dateAnalyticsData" :key="item.page">
+                  <tr v-for="item in paginatedData" :key="item.page">
                     <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">{{ decodeUrl(item.keys[0]) }}</td>
                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ item.clicks }}</td>
                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ item.impressions }}</td>
@@ -68,22 +67,57 @@
               </table>
             </div>
           </div>
+          <nav class="flex items-center justify-between border-t border-gray-200 px-4 sm:px-0" style="margin-top: 50px;">
+          <div class="-mt-px flex w-0 flex-1">
+            <button
+              @click="changePage(currentPage - 1)"
+              :disabled="currentPage === 1"
+              class="inline-flex items-center border-t-2 border-transparent pr-1 pt-4 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+            >
+              <ArrowLongLeftIcon class="mr-3 h-5 w-5 text-gray-400" aria-hidden="true" />
+              Previous
+            </button>
+          </div>
+          <div class="hidden md:-mt-px md:flex">
+            <button
+              v-for="page in visiblePages"
+              :key="page"
+              @click="changePage(page)"
+              class="inline-flex items-center border-t-2 px-4 pt-4 text-sm font-medium hover:border-gray-300 hover:text-gray-700"
+              :class="{ 'border-indigo-500 text-indigo-600': currentPage === page }"
+            >
+              {{ page }}
+            </button>
+            <span v-if="needsEllipsis" class="inline-flex items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-gray-500">...</span>
+          </div>
+          <div class="-mt-px flex w-0 flex-1 justify-end">
+            <button
+              @click="changePage(currentPage + 1)"
+              :disabled="currentPage === totalPages"
+              class="inline-flex items-center border-t-2 border-transparent pl-1 pt-4 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+            >
+              Next
+              <ArrowLongRightIcon class="ml-3 h-5 w-5 text-gray-400" aria-hidden="true" />
+            </button>
+          </div>
+        </nav>
         </div>
       </div>
     </MainLayout>
   </template>
   
   <script setup>
+  import { ArrowLongLeftIcon, ArrowLongRightIcon } from '@heroicons/vue/20/solid'
   import MainLayout from '../Layouts/MainLayout.vue';
-  import { ref, watch } from 'vue';
+  import { ref, watch, computed } from 'vue';
   import axios from 'axios';
 
   const tabs = [
-  { name: 'Search Performance', href: 'searchquery', current: false, id: "SearchQuery" },
-  { name: 'Page Performance', href: 'pagequery', current: false, id: "PageQuery" },
-  { name: 'Country Performance', href: 'countryquery', current: false, id: "CountryQuery" },
-  { name: 'Device Performance', href: 'devicequery', current: false, id: "DeviceQuery" },
-  { name: 'Date Performance', href: 'datequery', current: true, id: "DateQuery" },
+  { name: 'Search', href: 'searchquery', current: false, id: "SearchQuery" },
+  { name: 'Page', href: 'pagequery', current: false, id: "PageQuery" },
+  { name: 'Country', href: 'countryquery', current: false, id: "CountryQuery" },
+  { name: 'Device', href: 'devicequery', current: false, id: "DeviceQuery" },
+  { name: 'Date', href: 'datequery', current: true, id: "DateQuery" },
 ]
   
   const dateAnalyticsData = ref([]);
@@ -190,5 +224,36 @@ fetchData(selectedPeriod.value);
   const cleanedUrl = url.replace(/^\["|"\]$/g, '');
   return decodeURIComponent(cleanedUrl);
 };
+
+const currentPage = ref(1);
+const itemsPerPage = ref(10);
+
+const paginatedData = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage.value;
+  const end = start + itemsPerPage.value;
+  return dateAnalyticsData.value.slice(start, end);
+});
+
+const totalPages = computed(() => {
+  return Math.ceil(dateAnalyticsData.value.length / itemsPerPage.value);
+});
+
+function changePage(page) {
+  currentPage.value = page;
+}
+const visiblePages = computed(() => {
+  const pages = [];
+  const total = totalPages.value;
+  const current = currentPage.value;
+  const range = 2;
+
+  for (let i = 1; i <= total; i++) {
+    if (i === 1 || i === total || (i >= current - range && i <= current + range)) {
+      pages.push(i);
+    }
+  }
+
+  return pages;
+});
   </script>
   
