@@ -1,15 +1,22 @@
 <template>
     <MainLayout currentId="Speed">
       <div class="px-4 sm:px-6 lg:px-8">
-        <div class="hidden sm:block">
+        <!-- <div class="hidden sm:block">
           <div class="border-b border-gray-200">
             <nav class="-mb-px flex space-x-8" aria-label="Tabs">
               <a v-for="tab in tabs" :key="tab.name" :href="tab.href" :class="[tab.current ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700', 'whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium']" :aria-current="tab.current ? 'page' : undefined">{{ tab.name }}</a>
             </nav>
           </div>
-        </div>
-        <div class="sm:flex-auto" style="margin-top: 30px;">
+        </div> -->
+        <div class="sm:flex sm:items-center">
+        <div class="sm:flex-auto">
           <h1 class="text-base font-semibold leading-6 text-gray-900" style="font-size: 30px;">Page Speed｜Mobile</h1>
+        </div>
+        <div style="margin-right: 10px;">
+            <select id="tabs" v-model="selectedTabId" @change="onTabChange" class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-inindigo-600 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
+              <option v-for="tab in tabs" :key="tab.id" :value="tab.id">{{ tab.name }}</option>
+            </select>
+          </div>
         </div>
         <div v-if="isLoading" class="text-center py-8" style="margin-top:100px;">
         <span style="font-size:30px;">Loading...</span>
@@ -20,21 +27,21 @@
       <div class="mx-auto max-w-7xl px-6 lg:px-8">
         <div class="mx-auto max-w-2xl lg:max-w-none">
             <dl class="mt-16 grid grid-cols-1 gap-0.5 overflow-hidden rounded-2xl text-center sm:grid-cols-2 lg:grid-cols-4">
-              <div class="flex flex-col bg-gray-400/5 p-8">
+              <div class="flex flex-col bg-green-500/5 p-8">
                 <dt class="text-sm font-semibold leading-6 text-gray-600">Mobile</dt>
-                <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900">{{ data.mobile.performanceScore*100 }}%</dd>
+                <dd class="order-first text-3xl font-semibold tracking-tight text-green-500">{{ data.mobile.performanceScore*100 }}%</dd>
               </div>
-            <div class="flex flex-col bg-gray-400/5 p-8">
+            <div class="flex flex-col bg-green-500/5 p-8">
               <dt class="text-sm font-semibold leading-6 text-gray-600">PC</dt>
-              <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900">{{ data.desktop.performanceScore*100 }}%</dd>
+              <dd class="order-first text-3xl font-semibold tracking-tight text-green-500">{{ data.desktop.performanceScore*100 }}%</dd>
             </div>
-            <div class="flex flex-col bg-gray-400/5 p-8">
+            <div class="flex flex-col bg-green-500/5 p-8">
               <dt class="text-sm font-semibold leading-6 text-gray-600">Average</dt>
-              <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900">{{ ((data.mobile.performanceScore+data.desktop.performanceScore)/2*100).toFixed(1) }}%</dd>
+              <dd class="order-first text-3xl font-semibold tracking-tight text-green-500">{{ ((data.mobile.performanceScore+data.desktop.performanceScore)/2*100).toFixed(1) }}%</dd>
             </div>
-            <div class="flex flex-col bg-gray-400/5 p-8">
+            <div class="flex flex-col bg-green-500/5 p-8">
               <dt class="text-sm font-semibold leading-6 text-gray-600">Potential</dt>
-              <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900">{{ Math.abs((data.desktop.performanceScore - data.mobile.performanceScore)*100).toFixed(1) }}%</dd>
+              <dd class="order-first text-3xl font-semibold tracking-tight text-green-500">{{ Math.abs((data.desktop.performanceScore - data.mobile.performanceScore)*100).toFixed(1) }}%</dd>
             </div>
           </dl>
         </div>
@@ -66,9 +73,9 @@
             <button
               @click="changePage(currentPage - 1)"
               :disabled="currentPage === 1"
-              class="inline-flex items-center border-t-2 border-transparent pr-1 pt-4 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+              class="inline-flex items-center border-t-2 border-transparent pr-1 pt-4 text-sm font-medium text-indigo-600 hover:border-gray-300 hover:text-gray-700"
             >
-              <ArrowLongLeftIcon class="mr-3 h-5 w-5 text-gray-400" aria-hidden="true" />
+              <ArrowLongLeftIcon class="mr-3 h-5 w-5 text-indigo-600" aria-hidden="true" />
               Previous
             </button>
           </div>
@@ -88,10 +95,10 @@
             <button
               @click="changePage(currentPage + 1)"
               :disabled="currentPage === totalPages"
-              class="inline-flex items-center border-t-2 border-transparent pl-1 pt-4 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+              class="inline-flex items-center border-t-2 border-transparent pl-1 pt-4 text-sm font-medium text-indigo-600 hover:border-gray-300 hover:text-gray-700"
             >
               Next
-              <ArrowLongRightIcon class="ml-3 h-5 w-5 text-gray-400" aria-hidden="true" />
+              <ArrowLongRightIcon class="ml-3 h-5 w-5 text-indigo-600" aria-hidden="true" />
             </button>
           </div>
         </nav>
@@ -109,7 +116,7 @@
   const isLoading = ref(false);
   
   const tabs = [
-    { name: 'Mobile', href: 'mobilepagespeed', current: true, id: "PageSpeed" },
+    { name: 'Mobile', href: 'mobilepagespeed', current: true, id: "MobilePageSpeed" },
     { name: 'PC', href: 'pagespeed', current: false, id: "PageSpeed" },
   ]
   
@@ -171,6 +178,15 @@ const units = {
   numTasksOver10ms: '件',
   numTasksOver50ms: '件',
   numTasksOver25ms: '件',
+};
+
+const getPath = () => window.location.pathname.split('/').pop();
+const selectedTabId = ref(tabs.find(tab => tab.href.includes(getPath()))?.id || tabs[0].id);
+
+const onTabChange = () => {
+  const selectedTab = tabs.find(tab => tab.id === selectedTabId.value);
+  console.log('Selected tab href:', selectedTab.href);
+  window.location.href = selectedTab.href;
 };
 
   const url = ref(import.meta.env.VITE_MY_ADDRESS);

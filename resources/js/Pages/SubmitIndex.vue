@@ -2,24 +2,24 @@
     <MainLayout currentId="Index">
     <div class="px-4 sm:px-6 lg:px-8">
     <div>
-      <div class="hidden sm:block">
+      <!-- <div class="hidden sm:block">
       <div class="border-b border-gray-200">
         <nav class="-mb-px flex space-x-8" aria-label="Tabs">
           <a v-for="tab in tabs" :key="tab.name" :href="tab.href" :class="[tab.current ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700', 'whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium']" :aria-current="tab.current ? 'page' : undefined">{{ tab.name }}</a>
         </nav>
       </div>
-    </div>
-    <div class="sm:flex sm:items-center" style="margin-top: 30px;">
+    </div> -->
+    <div class="sm:flex sm:items-center">
       <div class="sm:flex-auto">
-        <h1 class="text-base font-semibold leading-6 text-gray-900" style="font-size: 30px;">Index</h1>
+        <h1 class="text-base font-semibold leading-6 text-gray-900" style="font-size: 30px;">Indexed</h1>
       </div>
     </div>
       <div class="mx-auto max-w-7xl px-6 lg:px-8">
         <div class="mx-auto max-w-2xl lg:max-w-none">
             <dl class="mt-16 grid grid-cols-1 gap-0.5 overflow-hidden rounded-2xl text-center sm:grid-cols-2 lg:grid-cols-4">
-              <div class="flex flex-col bg-gray-400/5 p-8">
+              <div class="flex flex-col bg-green-500/5 p-8">
                 <dt class="text-sm font-semibold leading-6 text-gray-600">index</dt>
-                <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900">{{ totalResults }}</dd>
+                <dd class="order-first text-3xl font-semibold tracking-tight text-green-500">{{ totalResults }}</dd>
               </div>
           </dl>
         </div>
@@ -30,12 +30,14 @@
             <table class="min-w-full divide-y divide-gray-300">
               <thead>
                 <tr>
-                  <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0" style="width: 52%;">URL</th>
+                  <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Title｜URL</th>
+                  <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Snippet｜Meta tags</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-gray-200">
                 <tr v-for="item in searchResults.items" :key="item.cacheId">
-                  <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">{{ item.title }}</td>
+                  <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">{{ item.title }}<br>{{ item.link }}</td>
+                  <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">{{ item.snippet }}{{ item.metatags }}</td>
                 </tr>
               </tbody>
             </table>
@@ -47,9 +49,9 @@
             <button
               @click="changePage(currentPage - 1)"
               :disabled="currentPage === 1"
-              class="inline-flex items-center border-t-2 border-transparent pr-1 pt-4 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+              class="inline-flex items-center border-t-2 border-transparent pr-1 pt-4 text-sm font-medium text-indigo-600 hover:border-gray-300 hover:text-gray-700"
             >
-              <ArrowLongLeftIcon class="mr-3 h-5 w-5 text-gray-400" aria-hidden="true" />
+              <ArrowLongLeftIcon class="mr-3 h-5 w-5 text-indigo-600" aria-hidden="true" />
               Previous
             </button>
           </div>
@@ -69,10 +71,10 @@
             <button
               @click="changePage(currentPage + 1)"
               :disabled="currentPage === totalPages"
-              class="inline-flex items-center border-t-2 border-transparent pl-1 pt-4 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+              class="inline-flex items-center border-t-2 border-transparent pl-1 pt-4 text-sm font-medium text-indigo-600 hover:border-gray-300 hover:text-gray-700"
             >
               Next
-              <ArrowLongRightIcon class="ml-3 h-5 w-5 text-gray-400" aria-hidden="true" />
+              <ArrowLongRightIcon class="ml-3 h-5 w-5 text-indigo-600" aria-hidden="true" />
             </button>
           </div>
         </nav>
@@ -82,7 +84,7 @@
   </template>
   
   <script setup>
-    import { ArrowLongLeftIcon, ArrowLongRightIcon } from '@heroicons/vue/20/solid'
+  import { ArrowLongLeftIcon, ArrowLongRightIcon } from '@heroicons/vue/20/solid'
   import MainLayout from '../Layouts/MainLayout.vue';
   import { ref,onMounted,computed } from 'vue';
   import axios from 'axios';

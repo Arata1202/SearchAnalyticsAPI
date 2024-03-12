@@ -1,7 +1,7 @@
 <template>
   <MainLayout currentId="Sitemap">
     <div class="px-4 sm:px-6 lg:px-8">
-      <div>
+      <!-- <div>
       <div class="sm:hidden">
         <label for="tabs" class="sr-only">Select a tab</label>
         <select id="tabs" name="tabs" class="block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
@@ -15,8 +15,8 @@
         </nav>
       </div>
     </div>
-  </div>
-  <div class="sm:flex sm:items-center" style="margin-top: 30px;">
+  </div> -->
+  <div class="sm:flex sm:items-center">
       <div class="sm:flex-auto">
         <h1 class="text-base font-semibold leading-6 text-gray-900" style="font-size: 30px;">Sitemap</h1>
       </div>
@@ -24,9 +24,9 @@
       <div class="mx-auto max-w-7xl px-6 lg:px-8">
         <div class="mx-auto max-w-2xl lg:max-w-none">
             <dl class="mt-16 grid grid-cols-1 gap-0.5 overflow-hidden rounded-2xl text-center sm:grid-cols-2 lg:grid-cols-4">
-              <div class="flex flex-col bg-gray-400/5 p-8">
+              <div class="flex flex-col bg-green-500/5 p-8">
                 <dt class="text-sm font-semibold leading-6 text-gray-600">Sitemap</dt>
-                <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900">{{ sitemapCount }}</dd>
+                <dd class="order-first text-3xl font-semibold tracking-tight text-green-500">{{ sitemapCount }}</dd>
               </div>
           </dl>
         </div>
@@ -61,9 +61,9 @@
             <button
               @click="changePage(currentPage - 1)"
               :disabled="currentPage === 1"
-              class="inline-flex items-center border-t-2 border-transparent pr-1 pt-4 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+              class="inline-flex items-center border-t-2 border-transparent pr-1 pt-4 text-sm font-medium text-indigo-600 hover:border-gray-300 hover:text-gray-700"
             >
-              <ArrowLongLeftIcon class="mr-3 h-5 w-5 text-gray-400" aria-hidden="true" />
+              <ArrowLongLeftIcon class="mr-3 h-5 w-5 text-indigo-600" aria-hidden="true" />
               Previous
             </button>
           </div>
@@ -83,10 +83,10 @@
             <button
               @click="changePage(currentPage + 1)"
               :disabled="currentPage === totalPages"
-              class="inline-flex items-center border-t-2 border-transparent pl-1 pt-4 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+              class="inline-flex items-center border-t-2 border-transparent pl-1 pt-4 text-sm font-medium text-indigo-600 hover:border-gray-300 hover:text-gray-700"
             >
               Next
-              <ArrowLongRightIcon class="ml-3 h-5 w-5 text-gray-400" aria-hidden="true" />
+              <ArrowLongRightIcon class="ml-3 h-5 w-5 text-indigo-600" aria-hidden="true" />
             </button>
           </div>
         </nav>

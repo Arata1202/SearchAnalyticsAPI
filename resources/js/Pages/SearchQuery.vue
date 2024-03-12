@@ -1,7 +1,8 @@
 <template>
   <MainLayout currentId="Query">
     <div class="px-4 sm:px-6 lg:px-8">
-      <div>
+      <!-- タブ -->
+      <!-- <div>
       <div class="sm:hidden">
         <label for="tabs" class="sr-only">Select a tab</label>
         <select id="tabs" name="tabs" class="block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
@@ -15,12 +16,18 @@
         </nav>
       </div>
     </div>
-  </div>
-      <div class="sm:flex sm:items-center" style="margin-top: 30px;">
+  </div> -->
+      <div class="sm:flex sm:items-center">
         <div class="sm:flex-auto">
           <h1 class="text-base font-semibold leading-6 text-gray-900" style="font-size: 30px;">Search Performance</h1>
         </div>
-        <select v-model="selectedPeriod">
+        <div style="margin-right: 10px;">
+            <select id="tabs" v-model="selectedTabId" @change="onTabChange" class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-indigo-600 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
+              <option v-for="tab in tabs" :key="tab.id" :value="tab.id">{{ tab.name }}</option>
+            </select>
+          </div>
+        <div>
+          <select v-model="selectedPeriod" id="location" name="location" class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-indigo-600 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
             <option value="0">Latest Day</option>
             <option value="7">Last 7 Days</option>
             <option value="28">Last 28 Days</option>
@@ -28,15 +35,16 @@
             <option value="180">Last 6 Months</option>
             <option value="365">Last 12 Months</option>
             <option value="488">Last 16 Months</option>
-        </select>
+          </select>
+        </div>
       </div>
       <div class="bg-white">
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
           <div class="mx-auto max-w-2xl lg:max-w-none">
             <dl class="mt-16 grid grid-cols-1 gap-0.5 overflow-hidden rounded-2xl text-center sm:grid-cols-2 lg:grid-cols-4">
-              <div v-for="stat in stats" :key="stat.id" class="flex flex-col bg-gray-400/5 p-8">
+              <div v-for="stat in stats" :key="stat.id" class="flex flex-col bg-green-500/5 p-8">
                 <dt class="text-sm font-semibold leading-6 text-gray-600">{{ stat.name }}</dt>
-                <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900">{{ stat.value }}</dd>
+                <dd class="order-first text-3xl font-semibold tracking-tight text-green-500">{{ stat.value }}</dd>
               </div>
             </dl>
           </div>
@@ -72,9 +80,9 @@
             <button
               @click="changePage(currentPage - 1)"
               :disabled="currentPage === 1"
-              class="inline-flex items-center border-t-2 border-transparent pr-1 pt-4 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+              class="inline-flex items-center border-t-2 border-transparent pr-1 pt-4 text-sm font-medium text-indigo-600 hover:border-gray-300 hover:text-gray-700"
             >
-              <ArrowLongLeftIcon class="mr-3 h-5 w-5 text-gray-400" aria-hidden="true" />
+              <ArrowLongLeftIcon class="mr-3 h-5 w-5 text-indigo-600" aria-hidden="true" />
               Previous
             </button>
           </div>
@@ -94,10 +102,10 @@
             <button
               @click="changePage(currentPage + 1)"
               :disabled="currentPage === totalPages"
-              class="inline-flex items-center border-t-2 border-transparent pl-1 pt-4 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+              class="inline-flex items-center border-t-2 border-transparent pl-1 pt-4 text-sm font-medium text-indigo-600 hover:border-gray-300 hover:text-gray-700"
             >
               Next
-              <ArrowLongRightIcon class="ml-3 h-5 w-5 text-gray-400" aria-hidden="true" />
+              <ArrowLongRightIcon class="ml-3 h-5 w-5 text-indigo-600" aria-hidden="true" />
             </button>
           </div>
         </nav>
@@ -121,6 +129,14 @@ const tabs = [
   { name: 'Device', href: 'devicequery', current: false, id: "DeviceQuery" },
   { name: 'Date', href: 'datequery', current: false, id: "DateQuery" },
 ]
+
+const getPath = () => window.location.pathname.split('/').pop();
+const selectedTabId = ref(tabs.find(tab => tab.href.includes(getPath()))?.id || tabs[0].id);
+
+const onTabChange = () => {
+  const selectedTab = tabs.find(tab => tab.id === selectedTabId.value);
+  window.location.href = selectedTab.href;
+};
 
 const searchAnalyticsData = ref([]);
 const selectedPeriod = ref('28');

@@ -12,6 +12,7 @@ use App\Http\Controllers\MobilePageSpeedController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\SubmitIndexController;
 use App\Http\Controllers\NewIndexController;
+use App\Http\Controllers\ContactMailController;
 
 
 
@@ -43,6 +44,10 @@ Route::get('/sitemaps', [SitemapController::class, 'index']);
 Route::post('/submit-sitemap', [SitemapController::class, 'submitSitemap']);
 Route::get('/search', [SubmitIndexController::class, 'search']);
 Route::post('/search-console/index', [NewIndexController::class, 'index']);
+
+
+Route::get('/emails/real-university-student', [ContactMailController::class, 'getRealUniversityStudentEmails']);
+
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

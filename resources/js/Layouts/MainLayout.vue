@@ -47,7 +47,7 @@
   import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
   
   const navigation = [
-    { name: 'Dashboard', href: 'home', icon: ChartPieIcon, current: false, id: "Dashboard" },
+    // { name: 'Dashboard', href: 'home', icon: ChartPieIcon, current: false, id: "Dashboard" },
     { name: 'Search Query', href: 'searchquery', icon: GlobeAsiaAustraliaIcon, current: false, id: "Query" },
     { name: 'Index', href: 'submitindex', icon: SignalIcon, current: false, id: "Index" },
     { name: 'Sitemap', href: 'sitemap', icon: DocumentMagnifyingGlassIcon, current: false, id: "Sitemap" },
