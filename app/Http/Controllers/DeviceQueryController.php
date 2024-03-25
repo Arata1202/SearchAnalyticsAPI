@@ -15,7 +15,7 @@ class DeviceQueryController extends Controller
 
         $service = new Google_Service_Webmasters($client);
 
-        $siteUrl = env('MY_ADDRESS');
+        $siteUrl = env('VITE_YOUR_URL');
         $startDate = $request->input('startDate', '7daysAgo');
         $endDate = $request->input('endDate', 'today');
 

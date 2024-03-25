@@ -9,9 +9,9 @@ class SubmitIndexController extends Controller
 {
     public function search(Request $request)
 {
-    $apiKey = env('GOOGLE_PAGESPEED_API_KEY');
+    $apiKey = env('GOOGLE_API_KEY');
     $searchEngineId = env('GOOGLE_SEARCH_ENGINE_ID');
-    $query = 'site:' . env('MY_ADDRESS') . ' ' . $request->query('q');
+    $query = 'site:' . env('VITE_YOUR_URL') . ' ' . $request->query('q');
     $start = $request->query('start', 1);
     $response = Http::get('https://www.googleapis.com/customsearch/v1', [
         'key' => $apiKey,

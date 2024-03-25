@@ -189,7 +189,7 @@ const onTabChange = () => {
   window.location.href = selectedTab.href;
 };
 
-  const url = ref(import.meta.env.VITE_MY_ADDRESS);
+  const url = ref(import.meta.env.VITE_YOUR_URL);
   const data = ref(null);
   
 const currentPage = ref(1);

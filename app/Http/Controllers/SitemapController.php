@@ -17,19 +17,19 @@ class SitemapController extends Controller
 
             $service = new Google_Service_Webmasters($client);
 
-            $siteUrl = env('MY_ADDRESS');
+            $siteUrl = env('VITE_YOUR_URL');
 
             $sitemapList = $service->sitemaps->listSitemaps($siteUrl);
 
             $sitemaps = [];
             foreach ($sitemapList->getSitemap() as $sitemap) {
-                $sitemapDetails = $service->sitemaps->get(env('MY_ADDRESS'), $sitemap->path);
+                $sitemapDetails = $service->sitemaps->get(env('VITE_YOUR_URL'), $sitemap->path);
                 $sitemaps[] = $sitemapDetails;
             }
 
             $sitemapURLs = [];
             foreach ($sitemaps as $sitemap) {
-                $sitemapURLList = $service->sitemaps->get(env('MY_ADDRESS'), $sitemap->path);
+                $sitemapURLList = $service->sitemaps->get(env('VITE_YOUR_URL'), $sitemap->path);
                 $sitemapURLs[$sitemap->path] = $sitemapURLList;
             }
 

@@ -23,6 +23,11 @@ class GoogleLoginController extends Controller
             'google_id' => $googleUser->id,
         ]);
 
+        $user = User::where('email', $googleUser->email)->first();
+        if (!$user) {
+            return redirect()->route('login')->with('error', 'このメールアドレスは登録されていません。');
+        }
+
         Auth::login($user, true);
 
         return redirect('/home');

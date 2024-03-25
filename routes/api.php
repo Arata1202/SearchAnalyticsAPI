@@ -46,7 +46,8 @@ Route::get('/search', [SubmitIndexController::class, 'search']);
 Route::post('/search-console/index', [NewIndexController::class, 'index']);
 
 
-Route::get('/emails/real-university-student', [ContactMailController::class, 'getRealUniversityStudentEmails']);
+Route::get('/emails', [ContactMailController::class, 'index']);
+
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

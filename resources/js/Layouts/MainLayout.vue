@@ -48,21 +48,23 @@
   
   const navigation = [
     // { name: 'Dashboard', href: 'home', icon: ChartPieIcon, current: false, id: "Dashboard" },
-    { name: 'Search Query', href: 'searchquery', icon: GlobeAsiaAustraliaIcon, current: false, id: "Query" },
-    { name: 'Index', href: 'submitindex', icon: SignalIcon, current: false, id: "Index" },
-    { name: 'Sitemap', href: 'sitemap', icon: DocumentMagnifyingGlassIcon, current: false, id: "Sitemap" },
+    { name: 'Performance', href: 'searchquery', icon: GlobeAsiaAustraliaIcon, current: false, id: "Query" },
+    { name: 'Indexed', href: 'submitindex', icon: SignalIcon, current: false, id: "Index" },
+    { name: 'Sitemaps', href: 'sitemap', icon: DocumentMagnifyingGlassIcon, current: false, id: "Sitemap" },
     { name: 'Page Speed', href: 'mobilepagespeed', icon: RocketLaunchIcon, current: false, id: "Speed" },
-    { name: 'Contact', href: 'contactmail', icon: EnvelopeIcon, current: false, id: "Contact" },
+    // { name: 'Contacts', href: 'contactmail', icon: EnvelopeIcon, current: false, id: "Contact" },
   ]
-  const teams = [
-    { id: 1, name: 'Heroicons', href: '#', initial: 'H', current: false },
-    { id: 2, name: 'Tailwind Labs', href: '#', initial: 'T', current: false },
-    { id: 3, name: 'Workcation', href: '#', initial: 'W', current: false },
-  ]
+  // const teams = [
+  //   { id: 1, name: 'Heroicons', href: '#', initial: 'H', current: false },
+  //   { id: 2, name: 'Tailwind Labs', href: '#', initial: 'T', current: false },
+  //   { id: 3, name: 'Workcation', href: '#', initial: 'W', current: false },
+  // ]
   const userNavigation = [
     { name: 'Profile', href: 'profile' },
     // { name: 'Sign out', click:'signOut', href: '#' },
   ]
+
+  const YourURL = ref(import.meta.env.VITE_YOUR_URL)
   
   const sidebarOpen = ref(false)
 
@@ -170,7 +172,7 @@
                   </li>
                 </ul>
               </li>
-              <li>
+              <!-- <li>
                 <div class="text-xs font-semibold leading-6 text-gray-400">Your teams</div>
                 <ul role="list" class="-mx-2 mt-2 space-y-1">
                   <li v-for="team in teams" :key="team.name">
@@ -180,9 +182,9 @@
                     </a>
                   </li>
                 </ul>
-              </li>
+              </li> -->
               <li class="mt-auto">
-                <a href="#" class="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white">
+                <a href="profile" class="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white">
                   <Cog6ToothIcon class="h-6 w-6 shrink-0" aria-hidden="true" />
                   Settings
                 </a>
@@ -209,21 +211,21 @@
               <input id="search-field" class="block h-full w-full border-0 py-0 pl-8 pr-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm" placeholder="Search..." type="search" name="search" />
             </form>
             <div class="flex items-center gap-x-4 lg:gap-x-6">
-              <button type="button" class="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500">
+              <!-- <button type="button" class="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500">
                 <span class="sr-only">View notifications</span>
                 <BellIcon class="h-6 w-6" aria-hidden="true" />
-              </button>
+              </button> -->
   
               <!-- Separator -->
-              <div class="hidden lg:block lg:h-6 lg:w-px lg:bg-gray-900/10" aria-hidden="true" />
+              <!-- <div class="hidden lg:block lg:h-6 lg:w-px lg:bg-gray-900/10" aria-hidden="true" /> -->
   
               <!-- Profile dropdown -->
               <Menu as="div" class="relative">
                 <MenuButton class="-m-1.5 flex items-center p-1.5">
-                  <span class="sr-only">Open user menu</span>
-                  <img class="h-8 w-8 rounded-full bg-gray-50" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
+                  <!-- <span class="sr-only">Open user menu</span>
+                  <img class="h-8 w-8 rounded-full bg-gray-50" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" /> -->
                   <span class="hidden lg:flex lg:items-center">
-                    <span class="ml-4 text-sm font-semibold leading-6 text-gray-900" aria-hidden="true">Tom Cook</span>
+                    <span class="ml-4 text-sm font-semibold leading-6 text-gray-900" aria-hidden="true">{{ YourURL }}</span>
                     <ChevronDownIcon class="ml-2 h-5 w-5 text-gray-400" aria-hidden="true" />
                   </span>
                 </MenuButton>

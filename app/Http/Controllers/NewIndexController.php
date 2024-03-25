@@ -10,14 +10,13 @@ class SearchConsoleController extends Controller
     public function index(Request $request)
     {
         $url = $request->input('url');
-        $apiKey = env('GOOGLE_PAGESPEED_API_KEY');  // Google API キー
-        $siteUrl = env('MY_ADDRESS');
+        $apiKey = env('GOOGLE_API_KEY');
+        $siteUrl = env('VITE_YOUR_URL');
 
-        // Search Console API へのリクエストURL
         $endpoint = "https://www.googleapis.com/webmasters/v3/sites/" . urlencode($siteUrl) . "/urlInspection/index:inspect?key=" . $apiKey;
 
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer YOUR_ACCESS_TOKEN', // OAuth 2.0 アクセストークン
+            'Authorization' => 'Bearer YOUR_ACCESS_TOKEN',
             'Content-Type' => 'application/json'
         ])->post($endpoint, [
             'inspectionUrl' => $url,

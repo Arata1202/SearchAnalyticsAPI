@@ -32,18 +32,18 @@ Route::get('/', function () {
 });
 
 Route::get('/home', function () {
-    return Inertia::render('home');
-})->middleware(['auth', 'verified'])->name('home');
-
-Route::get('/dashboard', function () {
-    return redirect()->route('home');
+    return redirect()->intended('/searchquery');
 });
 
-// Route::middleware('auth')->group(function () {
-//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-// });
+Route::get('/dashboard', function () {
+    return redirect()->intended('/searchquery');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
 
 
 Route::get('/login/google', [GoogleLoginController::class, 'redirectToGoogle'])->name('login.google');
@@ -51,8 +51,8 @@ Route::get('/login/google/callback', [GoogleLoginController::class, 'handleGoogl
 
 
 Route::get('/profile', function () {
-    return Inertia::render('Profile');
-})->middleware(['auth', 'verified']);
+    return redirect()->intended('/searchquery');
+});
 
 
 Route::get('/searchquery', function () {
@@ -99,9 +99,9 @@ Route::get('/newindex', function () {
     return Inertia::render('NewIndex');
 })->middleware(['auth', 'verified']);
 
-Route::get('/contactmail', function () {
-    return Inertia::render('ContactMail');
-})->middleware(['auth', 'verified']);
+// Route::get('/contactmail', function () {
+//     return Inertia::render('ContactMail');
+// })->middleware(['auth', 'verified']);
 
 
 

@@ -17,7 +17,7 @@ class SitemapController extends Controller
 
             $service = new Google_Service_Webmasters($client);
 
-            $siteUrl = env('MY_ADDRESS');
+            $siteUrl = env('VITE_YOUR_URL');
             $sitemapPath = $request->sitemapPath;
 
             $service->sitemaps->submit($siteUrl, $sitemapPath);

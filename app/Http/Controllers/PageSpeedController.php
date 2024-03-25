@@ -25,7 +25,7 @@ class PageSpeedController extends Controller
                         'url' => $url,
                         'strategy' => $strategy,
                         'locale'=>'ja',
-                        'key' => env('GOOGLE_PAGESPEED_API_KEY')
+                        'key' => env('GOOGLE_API_KEY')
                     ]
                 ]);
 
