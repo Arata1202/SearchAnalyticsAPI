@@ -1,7 +1,7 @@
 # アプリ概要
 
 SearchConsoleAPI, PageSpeedInsightAPI, CustomeSearchAPIを使って、ブログのパフォーマンスやページスピード、インデックス登録情報、サイトマップ提出状況などを一括で取得できるサービス。
-本来はGmailAPIを使用して問い合わせメールも取得したかったが、実装できず断念。
+<br>本来はGmailAPIを使用して問い合わせメールも取得したかったが、実装できず断念。
 
 # 使用方法
 
