@@ -11,8 +11,6 @@ use App\Http\Controllers\PageSpeedController;
 use App\Http\Controllers\MobilePageSpeedController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\SubmitIndexController;
-use App\Http\Controllers\NewIndexController;
-use App\Http\Controllers\ContactMailController;
 
 
 
@@ -43,10 +41,6 @@ Route::get('/mobilepagespeed', [MobilePageSpeedController::class, 'fetchPageSpee
 Route::get('/sitemaps', [SitemapController::class, 'index']);
 Route::post('/submit-sitemap', [SitemapController::class, 'submitSitemap']);
 Route::get('/search', [SubmitIndexController::class, 'search']);
-Route::post('/search-console/index', [NewIndexController::class, 'index']);
-
-
-Route::get('/emails', [ContactMailController::class, 'index']);
 
 
 

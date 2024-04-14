@@ -28,21 +28,11 @@ Route::get('/', function () {
 
 
 Route::get('/', function () {
-    return redirect()->route('home');
-});
-
-Route::get('/home', function () {
-    return redirect()->intended('/searchquery');
+    return redirect()->route('searchquery');
 });
 
 Route::get('/dashboard', function () {
     return redirect()->intended('/searchquery');
-});
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 
@@ -57,7 +47,8 @@ Route::get('/profile', function () {
 
 Route::get('/searchquery', function () {
     return Inertia::render('SearchQuery');
-})->middleware(['auth', 'verified']);
+})->middleware(['auth', 'verified'])
+->name('searchquery');;
 
 Route::get('/pagequery', function () {
     return Inertia::render('PageQuery');
@@ -93,10 +84,6 @@ Route::get('/newsitemap', function () {
 
 Route::get('/submitindex', function () {
     return Inertia::render('SubmitIndex');
-})->middleware(['auth', 'verified']);
-
-Route::get('/newindex', function () {
-    return Inertia::render('NewIndex');
 })->middleware(['auth', 'verified']);
 
 // Route::get('/contactmail', function () {
