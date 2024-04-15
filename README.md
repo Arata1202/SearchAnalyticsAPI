@@ -1,3 +1,28 @@
+###############################################<br>
+<br>
+# google<br>
+GOOGLE_CLIENT_ID="xxxxxxxxxx.com"<br>
+GOOGLE_CLIENT_SECRET="xxxxxxxxx"<br>
+GOOGLE_SEARCH_ENGINE_ID="xxxxxxxx"<br>
+GOOGLE_API_KEY="xxxx xxxx xxxx xxxx"<br>
+<br>
+# /storageに保存したCredentialsへのパス<br>
+GOOGLE_APPLICATION_CREDENTIALS="app/xxxxxxx.json"<br>
+<br>
+# URL<br>
+VITE_YOUR_URL=https://xxxxxxxxx.com<br>
+<br>
+# ログイン情報<br>
+VITE_YOUR_EMAIL_ADDRESS=example@example.com<br>
+VITE_YOUR_EMAIL_PASSWORD=Abcd1234<br>
+<br>
+###############################################<br>
+<br>
+1, .env を作成。<br>
+2, npm, composer　のinstall<br>
+3, php artisan migrate --seed<br>
+4, npm run dev, php artisan serve<br>
+<br>
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
