@@ -1,18 +1,18 @@
 ###############################################<br>
 <br>
-# google<br>
+google<br>
 GOOGLE_CLIENT_ID="xxxxxxxxxx.com"<br>
 GOOGLE_CLIENT_SECRET="xxxxxxxxx"<br>
 GOOGLE_SEARCH_ENGINE_ID="xxxxxxxx"<br>
 GOOGLE_API_KEY="xxxx xxxx xxxx xxxx"<br>
 <br>
-# /storageに保存したCredentialsへのパス<br>
+/storageに保存したCredentialsへのパス<br>
 GOOGLE_APPLICATION_CREDENTIALS="app/xxxxxxx.json"<br>
 <br>
-# URL<br>
+URL<br>
 VITE_YOUR_URL=https://xxxxxxxxx.com<br>
 <br>
-# ログイン情報<br>
+ログイン情報<br>
 VITE_YOUR_EMAIL_ADDRESS=example@example.com<br>
 VITE_YOUR_EMAIL_PASSWORD=Abcd1234<br>
 <br>
